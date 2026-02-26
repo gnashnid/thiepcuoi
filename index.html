@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thiệp Cưới – Văn Tuệ &amp; Minh Ánh</title>
+    <meta name="description" content="Trân trọng kính mời bạn tham dự hôn lễ của Văn Tuệ và Minh Ánh ngày 29.03.2026">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&family=Dancing+Script:wght@500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ══════════ MUSIC PLAYER ══════════ -->
+    <audio id="bg-music" loop preload="auto">
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Nút bật/tắt nhạc -->
+    <button id="music-btn" class="music-btn" title="Bật/tắt nhạc" onclick="toggleMusic()">
+        <svg id="music-icon-on" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M9 3v10.55A4 4 0 1 0 11 17V7h4V3H9z" />
+        </svg>
+        <svg id="music-icon-off" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+            style="display:none">
+            <path
+                d="M4.27 3 3 4.27l6.01 6.01V17a4 4 0 1 0 2 3.46V12.27L19.73 21 21 19.73 4.27 3zM9 21a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm6-14h4V3H9v2.18L15 11.18V7z" />
+        </svg>
+        <span class="music-bars" id="music-bars">
+            <i></i><i></i><i></i>
+        </span>
+    </button>
+    <div class="card">
+
+        <!-- ══════════ 1. HERO ══════════ -->
+        <section class="hero">
+            <div class="hero__img-wrap">
+                <img src="images/hero.jpg" alt="Văn Tuệ & Minh Ánh" class="hero__img">
+                <div class="hero__vignette"></div>
+            </div>
+            <div class="hero__text">
+                <div class="hero__top">
+                    <p class="hero__script">We get married!</p>
+                </div>
+                <div class="hero__bottom">
+                    <h1 class="hero__names">
+                        <span>Văn Tuệ</span>
+                        <span class="hero__amp">&amp;</span>
+                        <span>Minh Ánh</span>
+                    </h1>
+                    <p class="hero__date">29.03.2026</p>
+                    <p class="hero__sub">We will become husband and wife in</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══════════ 2. COUNTDOWN ══════════ -->
+        <section class="cdown">
+            <div class="cdown__item"><b id="days">--</b><span>ngày</span></div>
+            <div class="cdown__item"><b id="hours">--</b><span>giờ</span></div>
+            <div class="cdown__item"><b id="minutes">--</b><span>phút</span></div>
+            <div class="cdown__item"><b id="seconds">--</b><span>giây</span></div>
+        </section>
+
+        <!-- ══════════ 3. GALLERY ROW 1 ══════════ -->
+        <div class="gallery-row">
+            <div class="g-cell g-cell--left">
+                <img src="images/photo1.jpg" alt="Ảnh cưới">
+            </div>
+            <div class="g-cell g-cell--right">
+                <img src="images/photo3.jpg" alt="Ảnh cưới">
+            </div>
+        </div>
+
+        <!-- ══════════ 4. SAVE THE DATE ══════════ -->
+        <section class="std">
+            <div class="std__head">
+                <h2 class="std__save">SAVE</h2>
+                <p class="std__the"><em>the</em></p>
+                <h2 class="std__date-big">DATE</h2>
+                <p class="std__date-num">29.03.2026</p>
+            </div>
+
+            <div class="std__families">
+                <div class="std__family">
+                    <h4>Nhà trai</h4>
+                    <p>Ông. Nguyễn Văn Thành</p>
+                    <p>Bà. Phạm Thị Thoa</p>
+                    <p>Xuân Giang – Ninh Bình</p>
+                </div>
+                <div class="std__divider-v"></div>
+                <div class="std__family">
+                    <h4>Nhà gái</h4>
+                    <p>Ông. Nguyễn Văn Dũng</p>
+                    <p>Bà. Ngô Thị Phương</p>
+                    <p>Kim Thanh – Ninh Bình</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══════════ 5. LỜI MỜI + TÊN ══════════ -->
+        <section class="invite">
+            <p class="invite__lead">Thân mời đến dự lễ thành hôn của chúng mình!</p>
+            <div class="invite__names">
+                <span class="invite__script">Văn Tuệ</span>
+                <span class="invite__amp">&amp;</span>
+                <span class="invite__script">Minh Ánh</span>
+            </div>
+            <p class="invite__venue-label">Được tổ chức tại:</p>
+
+            <div class="invite__events">
+                <div class="invite__event">
+                    <h4>Nhà trai</h4>
+                    <p><strong>9h00</strong> Chủ Nhật</p>
+                    <p>Ngày 29.03.2026</p>
+                    <p>Tại tư gia nhà trai</p>
+                </div>
+                <div class="invite__event--divider"></div>
+                <div class="invite__event">
+                    <h4>Nhà gái</h4>
+                    <p><strong>17h30</strong> Thứ 7</p>
+                    <p>Ngày 28.03.2026</p>
+                    <p>Tại tư gia nhà gái</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══════════ 6. CHÂN DUNG — staggered layout ══════════ -->
+        <div class="ps-wrap">
+            <!-- Ảnh cô dâu: trái, trên -->
+            <div class="ps-img ps-img--bride">
+                <img src="images/bride.jpg" alt="Cô dâu Minh Ánh">
+            </div>
+
+            <!-- Text cô dâu: phải, trên (trong khoảng trống trước ảnh chú rể) -->
+            <div class="ps-label ps-label--bride">
+                <p class="ps-role">Cô dâu</p>
+                <p class="ps-name">Minh Ánh</p>
+            </div>
+
+            <!-- Text chú rể: trái, dưới (trong khoảng trống dưới ảnh cô dâu) -->
+            <div class="ps-label ps-label--groom">
+                <p class="ps-role">Chú rể</p>
+                <p class="ps-name">Văn Tuệ</p>
+            </div>
+
+            <!-- Ảnh chú rể: phải, dưới — chồng lên ảnh cô dâu -->
+            <div class="ps-img ps-img--groom">
+                <img src="images/photo4.jpg" alt="Chú rể Văn Tuệ">
+            </div>
+        </div>
+
+        <!-- ══════════ 7. RSVP ══════════ -->
+        <section class="rsvp">
+            <p class="rsvp__note">Hãy xác nhận sự có mặt của bạn để chúng mình chuẩn bị đón tiếp mọi người chu đáo nhất…
+                <a href="#" class="rsvp__readmore">Trân trọng!</a>
+            </p>
+
+            <h3 class="rsvp__title">Xác nhận tham dự</h3>
+
+            <form class="rsvp__form" onsubmit="handleRSVP(event)">
+                <div class="rsvp__field-label">Họ và tên</div>
+                <input type="text" id="rsvp-name" placeholder="Nhập tên của bạn" required>
+
+                <div class="rsvp__field-label">Bạn sẽ tham dự chứ?</div>
+                <div class="rsvp__radios">
+                    <label class="rsvp__radio">
+                        <input type="radio" name="attend" value="yes" checked>
+                        <span>Có, tôi sẽ tham dự</span>
+                    </label>
+                    <label class="rsvp__radio">
+                        <input type="radio" name="attend" value="no">
+                        <span>Tôi bận, rất tiếc không thể tham dự</span>
+                    </label>
+                </div>
+                <button type="submit" class="rsvp__btn">Gửi xác nhận</button>
+            </form>
+        </section>
+
+        <!-- ══════════ 8. FOOTER ══════════ -->
+        <footer class="foot">
+            <p class="foot__text">Thank you!</p>
+        </footer>
+
+    </div><!-- /.card -->
+    <script src="main.js"></script>
+    <script>
+        // ── Nhạc nền ──────────────────────────────────
+        const audio = document.getElementById('bg-music');
+        const btn = document.getElementById('music-btn');
+        const iconOn = document.getElementById('music-icon-on');
+        const iconOff = document.getElementById('music-icon-off');
+        const bars = document.getElementById('music-bars');
+        let playing = false;
+
+        audio.volume = 0.5;
+
+        // Thử autoplay ngay khi trang load
+        function tryAutoplay() {
+            audio.play().then(() => {
+                playing = true;
+                updateMusicUI();
+                // Nếu autoplay thành công, xóa listener click
+                document.removeEventListener('click', unlockOnFirstClick);
+                document.removeEventListener('touchstart', unlockOnFirstClick);
+            }).catch(() => {
+                // Trình duyệt chặn autoplay → chờ người dùng click
+                playing = false;
+                updateMusicUI();
+            });
+        }
+
+        // Fallback: mở khóa audio lần đầu người dùng chạm/click
+        function unlockOnFirstClick() {
+            if (!playing) {
+                audio.play().then(() => {
+                    playing = true;
+                    updateMusicUI();
+                }).catch(() => { });
+            }
+            document.removeEventListener('click', unlockOnFirstClick);
+            document.removeEventListener('touchstart', unlockOnFirstClick);
+        }
+        document.addEventListener('click', unlockOnFirstClick);
+        document.addEventListener('touchstart', unlockOnFirstClick);
+
+        // Chạy autoplay sau khi DOM sẵn sàng
+        window.addEventListener('load', tryAutoplay);
+
+        function toggleMusic() {
+            if (playing) {
+                audio.pause();
+                playing = false;
+            } else {
+                audio.play().catch(() => { });
+                playing = true;
+            }
+            updateMusicUI();
+        }
+
+        function updateMusicUI() {
+            if (playing) {
+                iconOn.style.display = 'none';
+                iconOff.style.display = 'none';
+                bars.style.display = 'flex';
+                btn.classList.add('music-btn--playing');
+            } else {
+                iconOn.style.display = 'none';
+                iconOff.style.display = 'block';
+                bars.style.display = 'none';
+                btn.classList.remove('music-btn--playing');
+            }
+        }
+    </script>
+</body>
+
+</html>
