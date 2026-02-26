@@ -196,66 +196,68 @@
         const iconOn = document.getElementById('music-icon-on');
         const iconOff = document.getElementById('music-icon-off');
         const bars = document.getElementById('music-bars');
-        let playing = false;
 
         audio.volume = 0.5;
 
-        // Thử autoplay ngay khi trang load
-        function tryAutoplay() {
-            audio.play().then(() => {
-                playing = true;
-                updateMusicUI();
-                // Nếu autoplay thành công, xóa listener click
-                document.removeEventListener('click', unlockOnFirstClick);
-                document.removeEventListener('touchstart', unlockOnFirstClick);
-            }).catch(() => {
-                // Trình duyệt chặn autoplay → chờ người dùng click
-                playing = false;
-                updateMusicUI();
-            });
-        }
+        // Lắng nghe sự kiện thực tế của audio để cập nhật UI
+        audio.addEventListener('play', () => {
+            iconOn.style.display = 'none';
+            iconOff.style.display = 'none';
+            bars.style.display = 'flex';
+            btn.classList.add('music-btn--playing');
+        });
 
-        // Fallback: mở khóa audio lần đầu người dùng chạm/click
-        function unlockOnFirstClick() {
-            if (!playing) {
-                audio.play().then(() => {
-                    playing = true;
-                    updateMusicUI();
-                }).catch(() => { });
-            }
-            document.removeEventListener('click', unlockOnFirstClick);
-            document.removeEventListener('touchstart', unlockOnFirstClick);
-        }
-        document.addEventListener('click', unlockOnFirstClick);
-        document.addEventListener('touchstart', unlockOnFirstClick);
+        audio.addEventListener('pause', () => {
+            iconOn.style.display = 'none';
+            iconOff.style.display = 'block';
+            bars.style.display = 'none';
+            btn.classList.remove('music-btn--playing');
+        });
 
-        // Chạy autoplay sau khi DOM sẵn sàng
-        window.addEventListener('load', tryAutoplay);
-
+        // Bật/tắt thủ công qua nút
+        // Lưu ý: Cần ngăn chặn nổi bọt sự kiện để không đụng độ với document click
         function toggleMusic() {
-            if (playing) {
-                audio.pause();
-                playing = false;
+            if (audio.paused) {
+                audio.play().catch(e => console.log('Lỗi phát nhạc thủ công:', e));
             } else {
-                audio.play().catch(() => { });
-                playing = true;
+                audio.pause();
             }
-            updateMusicUI();
         }
 
-        function updateMusicUI() {
-            if (playing) {
-                iconOn.style.display = 'none';
-                iconOff.style.display = 'none';
-                bars.style.display = 'flex';
-                btn.classList.add('music-btn--playing');
+        // Đảm bảo click vào nút music-btn không trigger document click thêm lần nữa
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+
+        // Tự mở khóa nhạc khi người dùng tương tác với DOM
+        function unlockAudio() {
+            if (audio.paused) {
+                audio.play().then(() => {
+                    // Cấp quyền thành công, gỡ bỏ listener
+                    document.removeEventListener('click', unlockAudio);
+                    document.removeEventListener('touchstart', unlockAudio);
+                    document.removeEventListener('scroll', unlockAudio);
+                }).catch(() => {
+                    // Vẫn bị chặn, tiếp tục chờ tương tác khác
+                });
             } else {
-                iconOn.style.display = 'none';
-                iconOff.style.display = 'block';
-                bars.style.display = 'none';
-                btn.classList.remove('music-btn--playing');
+                // Đã phát rồi thì gỡ listener
+                document.removeEventListener('click', unlockAudio);
+                document.removeEventListener('touchstart', unlockAudio);
+                document.removeEventListener('scroll', unlockAudio);
             }
         }
+
+        document.addEventListener('click', unlockAudio);
+        document.addEventListener('touchstart', unlockAudio);
+        document.addEventListener('scroll', unlockAudio); // scroll đôi khi là user gesture
+
+        // Cố gắng phát ngay lúc load
+        window.addEventListener('load', () => {
+            audio.play().catch(() => {
+                console.log('Autoplay blocked. Chờ tương tác từ người dùng.');
+            });
+        });
     </script>
 </body>
 
