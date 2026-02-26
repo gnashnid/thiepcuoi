@@ -59,6 +59,16 @@ button {
     overflow: hidden;
 }
 
+/* Biện pháp ép người dùng tương tác để phát nhạc */
+.touch-mask {
+    position: fixed;
+    inset: 0;
+    z-index: 999999;
+    cursor: pointer;
+    /* Trong suốt hoàn toàn để hiển thị giao diện bên dưới */
+    background: transparent;
+}
+
 /* ════════════════════════
    1. HERO
 ════════════════════════ */

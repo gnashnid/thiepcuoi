@@ -188,6 +188,10 @@
         </footer>
 
     </div><!-- /.card -->
+
+    <!-- Lớp phủ ẩn ép người dùng click một lần trước khi có thể vuốt trang -->
+    <div id="touch-mask" class="touch-mask" title="Chạm để bắt đầu xem thiệp"></div>
+
     <script src="main.js"></script>
     <script>
         // ── Nhạc nền ──────────────────────────────────
@@ -196,6 +200,7 @@
         const iconOn = document.getElementById('music-icon-on');
         const iconOff = document.getElementById('music-icon-off');
         const bars = document.getElementById('music-bars');
+        const touchMask = document.getElementById('touch-mask');
 
         audio.volume = 0.5;
 
@@ -215,7 +220,6 @@
         });
 
         // Bật/tắt thủ công qua nút
-        // Lưu ý: Cần ngăn chặn nổi bọt sự kiện để không đụng độ với document click
         function toggleMusic() {
             if (audio.paused) {
                 audio.play().catch(e => console.log('Lỗi phát nhạc thủ công:', e));
@@ -229,30 +233,32 @@
             e.stopPropagation();
         });
 
-        // Tự mở khóa nhạc khi người dùng tương tác với DOM
-        const unlockEvents = ['click', 'touchstart', 'touchend', 'touchmove', 'mousedown', 'keydown', 'wheel', 'scroll'];
+        // Xử lý mở khóa từ lớp phủ (Touch Mask)
+        function unlockFromMask(e) {
+            e.preventDefault(); // Ngăn hành vi scroll mặc định hoặc click lan tỏa
 
-        function unlockAudio() {
-            if (audio.paused) {
-                audio.play().then(() => {
-                    // Cấp quyền thành công, gỡ bỏ listener
-                    unlockEvents.forEach(evt => document.removeEventListener(evt, unlockAudio));
-                }).catch(() => {
-                    // Vẫn bị chặn, tiếp tục chờ tương tác khác
-                });
-            } else {
-                // Đã phát rồi thì gỡ listener
-                unlockEvents.forEach(evt => document.removeEventListener(evt, unlockAudio));
+            // Phát nhạc
+            audio.play().catch(e => console.log('Autoplay từ mask bị chặn:', e));
+
+            // Xóa mặt nạ vĩnh viễn
+            if (touchMask) {
+                touchMask.remove();
             }
         }
 
-        // Lắng nghe tất cả các sự kiện có thể được tính là tương tác người dùng
-        unlockEvents.forEach(evt => document.addEventListener(evt, unlockAudio, { passive: true }));
+        // Ép người dùng click/touch chạm nhẹ 1 lần đầu vào màn hình
+        if (touchMask) {
+            touchMask.addEventListener('click', unlockFromMask);
+            touchMask.addEventListener('touchstart', unlockFromMask);
+        }
 
-        // Cố gắng phát ngay lúc load
+        // Cố gắng phát ngay lúc load, nếu được thì cũng gỡ mask
         window.addEventListener('load', () => {
-            audio.play().catch(() => {
-                console.log('Autoplay blocked. Chờ tương tác từ người dùng.');
+            audio.play().then(() => {
+                // Autoplay thành công (thường là trên desktop), gỡ mask ngay
+                if (touchMask) touchMask.remove();
+            }).catch(() => {
+                console.log('Autoplay bị chặn. Chờ chạm từ người dùng qua mask.');
             });
         });
     </script>
